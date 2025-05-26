@@ -20,45 +20,23 @@ function login() {
     }
     localStorage.setItem("ip-address", ip);
 
-    const socket = new WebSocket(`ws://${ip}:8080`);
-    socket.onopen = () =>
-    {
-        const time = new Date().toLocaleTimeString();
-        const name = username; 
-        const message =
-        {
-            type: 'info',
-            name,
-            password: account_password,
-            text: `trying to connect`,
-            time
-        };
-        socket.send(JSON.stringify(message));
+    const server = `http://${ip}`;
+
+    const postData = async (url = '', data = {}) => {
+
+        const response = await fetch(url, {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+
+        });
+        return response.json(); 
     }
-
-    socket.onmessage = (event) =>
-    {
-        try
-        {
-            const data = JSON.parse(event.data);
-    
-            const {type = "", text = ""} = data;
-
-            if (type == "info")
-            {
-                if (text != "Correct.")
-                {
-                    alert(text);
-                }
-                else
-                {
-                    window.location.href = "Bubble.html";
-                }
-            }
-        } 
-        catch (error)
-        {
-            console.log(error);
-        }
-    };
+    postData(`${server}/login`, { name: username,  password: account_password})
+        .then((data) => {
+            console.log(data); 
+        });
 }
