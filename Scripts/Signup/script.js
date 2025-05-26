@@ -50,9 +50,11 @@ function signup() {
         }
         postData(`${server}/register`, { name: username,  password: account_password})
         .then((data) => {
-            console.log(data); 
+            alert(data);
+            if (data == "User registrated successfully!")
+            {
+                window.location.href = "index.html";
+            }
         });
     }
-    alert("Account created successfully!");
-    //window.location.href = "Login.html";
 }
