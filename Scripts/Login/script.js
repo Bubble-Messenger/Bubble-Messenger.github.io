@@ -35,22 +35,8 @@ function login() {
         });
         return response.json(); 
     }
-    try
-    {
-        postData(`${server}/login`, { name: username,  password: account_password})
-            .then((data) => {
-                alert(data); 
-        });
-    }
-    catch(error)
-    {
-        if (error == "Failed to load resource: net::ERR_CONNECTION_REFUSED")
-        {
-            alert("Failed to connect to server.");
-        }
-        else
-        {
-            console.error(error);
-        }
-    }
+    postData(`${server}/login`, { name: username,  password: account_password})
+        .then((data) => {
+            alert(data); 
+    });
 }
