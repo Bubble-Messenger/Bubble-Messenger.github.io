@@ -31,7 +31,7 @@ function signup() {
     }
     else
     {
-        const server = `https://${ip}:5141`;
+        const server = `https://${ip}`;
 
         // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
         const postData = async (url = '', data = {}) => {
