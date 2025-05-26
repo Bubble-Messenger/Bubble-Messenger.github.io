@@ -37,6 +37,6 @@ function login() {
     }
     postData(`${server}/login`, { name: username,  password: account_password})
         .then((data) => {
-            console.log(data); 
+            alert(data); 
         });
 }
