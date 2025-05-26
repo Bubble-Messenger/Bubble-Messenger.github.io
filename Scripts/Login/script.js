@@ -20,7 +20,7 @@ function login() {
     }
     localStorage.setItem("ip-address", ip);
 
-    const server = `http://${ip}`;
+    const server = `https://${ip}`;
 
     const postData = async (url = '', data = {}) => {
 
