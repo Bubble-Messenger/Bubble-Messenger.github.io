@@ -37,6 +37,13 @@ function login() {
     }
     postData(`${server}/login`, { name: username,  password: account_password})
         .then((data) => {
-            alert(data); 
+            if (data == "User loginned successfully!")
+            {
+                window.location.href = "Bubble.html";
+            }
+            else
+            {
+                alert(data);
+            }
     });
 }
