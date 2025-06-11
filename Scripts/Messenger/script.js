@@ -39,7 +39,7 @@ defchat.addEventListener("click", function() {
 
 // Подключение к WebSocket серверу
 
-const socket = new WebSocket(`ws://${localStorage.getItem("ip-address")}:8080`);
+const socket = new WebSocket(`ws://127.0.0.1:8080`);
     
 // Обработка успешного подключения к серверу
 
@@ -47,16 +47,12 @@ socket.onopen = () =>
 {
     addMessageToChat('chat', 'Connected to server...', 'System', new Date().toLocaleTimeString());
 
-    const name = this_user;
-    let to = "chat";
-    let time = new Date().toLocaleTimeString();
+    const _userId = localStorage.getItem("bubble_id"); 
     
     const message =
     {
-        type: 'info',
-        name,
-        text: 'connected to server',
-        time
+        user_id: _userId,
+        action: 'connected'
     };
 
     // Отправка сообщения на сервер
@@ -77,138 +73,9 @@ socket.onmessage = (event) =>
 
         const data = JSON.parse(event.data);
     
-        const {type = '', from = 'System', to = '', time = new Date().toLocaleTimeString(), text = '', filetype = '', specialization = ''} = data;
+        // const {id = '', sender_name = '', receiver_id = '', text = '', timestamp = '', color = ''} = data;
     
-        //  Ниже - обработка случайного попадания на эту страницу без логина и перенаправление на Login.html
-
-        if (type == "error")
-        {
-            if (text == "Not registered")
-            {
-                window.location.href = "Login.html";
-            }
-        }
-        if (type == "new connect")
-        {
-            if (users_list.includes(text))
-            {
-                let chat_with_this_user = document.getElementById(text);
-                let avatar = chat_with_this_user.querySelector('.chat-avatar');
-
-                const online_bar = document.createElement('div');
-                online_bar.classList.add('isOnline');
-                avatar.appendChild(online_bar);
-            }
-
-            else if (text != this_user)
-            {
-                const conversationDiv = document.createElement('div');
-                conversationDiv.classList.add('chatlist');
-                conversationDiv.id = text;
-                
-                const chatAvatarDiv = document.createElement('div');
-                chatAvatarDiv.classList.add('chat-avatar');
-
-                const textsDiv = document.createElement('div');
-                textsDiv.classList.add('texts');
-
-                const conversationName = document.createElement('p');
-                conversationName.classList.add('chatlist-name');
-                conversationName.textContent = text;
-
-                const lastMsg = document.createElement('p');
-                lastMsg.classList.add('last-message');
-                lastMsg.textContent = '...';
-
-                conversationDiv.appendChild(chatAvatarDiv);
-                textsDiv.appendChild(conversationName);
-                textsDiv.appendChild(lastMsg);
-                conversationDiv.appendChild(textsDiv);
-                sidebar.appendChild(conversationDiv);
-
-                conversationDiv.addEventListener("click", function() {
-                    ClearMessages(text);
-                    console.log(text);
-                });
-
-                let chat_with_this_user = document.getElementById(text);
-                let avatar = chat_with_this_user.querySelector('.chat-avatar');
-
-                const online_bar = document.createElement('div');
-                online_bar.classList.add('isOnline');
-                avatar.appendChild(online_bar);
-
-                users_list.push(text);
-            } 
-        }
-        if (type == "history")
-        {
-            console.log("History.");
-            test_text = text;
-            if (specialization == this_user)
-            {
-                const old_msg_data = JSON.parse(test_text);
-    
-                const {type = '', from = 'System', to = '', time = new Date().toLocaleTimeString(), text = '', filetype = ''} = old_msg_data;
-                new_text = text;
-
-                addMessageToChat(type, new_text, from, time);
-            }
-        }
-        if (type == "users-history")
-        {
-            const [uz_text, state] = text.split(/\s/, 2);
-            if (specialization == this_user && uz_text != this_user)
-            {
-                const conversationDiv = document.createElement('div');
-                conversationDiv.classList.add('chatlist');
-                conversationDiv.id = uz_text;
-                    
-                const chatAvatarDiv = document.createElement('div');
-                chatAvatarDiv.classList.add('chat-avatar');
-
-                const textsDiv = document.createElement('div');
-                textsDiv.classList.add('texts');
-
-                const conversationName = document.createElement('p');
-                conversationName.classList.add('chatlist-name');
-                conversationName.textContent = uz_text;
-
-                const lastMsg = document.createElement('p');
-                lastMsg.classList.add('last-message');
-                lastMsg.textContent = '...';
-
-                conversationDiv.appendChild(chatAvatarDiv);
-                textsDiv.appendChild(conversationName);
-                textsDiv.appendChild(lastMsg);
-                conversationDiv.appendChild(textsDiv);
-                sidebar.appendChild(conversationDiv);
-
-                conversationDiv.addEventListener("click", function() {
-                    ClearMessages(uz_text);
-                    console.log(uz_text);
-                });
-
-                if (state == "True")
-                {
-                    const online_bar = document.createElement('div');
-                    online_bar.classList.add('isOnline');
-                    chatAvatarDiv.appendChild(online_bar);
-                }
-
-                users_list.push(uz_text);
-            }
-        }
-        if (type == "user_disconnected")
-        {
-            let disconnected_user = document.getElementById(text);
-            let avatar = disconnected_user.querySelector('.chat-avatar');
-            avatar.innerHTML = '';
-        }
-        if (type == "chat", (from == this_user && to == selected_chat) || (from == selected_chat && to == this_user) || to == selected_chat)
-        {
-            addMessageToChat(type, text, from, time);
-        }
+        console.log(data.text);
     } 
     catch (error)
     {
@@ -400,13 +267,13 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("username_field").textContent = username;
     }
 
-    let ip_address = localStorage.getItem("ip-address")
-    if (!ip_address)
+    let ip_address = "127.0.0.1:8080"
+    /*if (!ip_address)
     {
         window.location.href = "Login.html";
     }
     else
     {
         document.getElementById("ip-address").textContent = ip_address;
-    }
+    }*/
 });
