@@ -41,7 +41,7 @@ function login() {
             if (json.response == "User loginned successfully!")
             {
                 localStorage.setItem("bubble_id", json.id);
-                window.location.href = "bubble.html";
+                window.location.href = "Bubble.html";
             }
             else
             {
