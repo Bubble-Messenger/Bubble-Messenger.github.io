@@ -1,46 +1,42 @@
-<!-- Made by MaxxTheLightning, 2025 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble</title>
-    <link rel="stylesheet" href="Scripts/Messenger/style.css">
-    <link rel="website icon" type="png" href="Images/Icon03.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bubble</title>
+  <link rel="stylesheet" href="Scripts/Messenger/style.css">
+  <link rel="website icon" type="png" href="Images/Icon03.png">
 </head>
 <body>
-    <div id="sidebar">
-        <!--
-        <div class="about">
-            <img src="Images/Icon02.png" class="avatar">
-            <label for="file-upload" class="custom-file-upload">Выберите файл</label>
-            <input type="file" id="file-upload" hidden>
-            <h2><span id="username_field"></span></h2>
-            <p id="ip-address">127.0.0.1</p>
-            <p id="user_state">Loading...</p>
-        </div>
-        -->
-        <div class = "chatlist" id="default-chat">
-            <div class = "chat-avatar">
-                <div class = "isOnline"></div>
-            </div>
-            <div class = "texts">
-                <p class = "chatlist-name">Server (main)</p>
-                <p class = "last-message">Alex: Hello!</p>
-            </div>
-        </div>
+  <div class="sidebar">
+    <div class="profile">
+      <img src="https://i.imgur.com/JgY8bVE.png" alt="Profile" />
+      <span id="account_username">User</span>
     </div>
+    <nav>
+      <ul>
+        <li class="active">💬 Chats</li>
+        <li>👥 People</li>
+        <li>📄 Stories</li>
+        <li># Channels</li>
+        <li>📞 Calls</li>
+      </ul>
+    </nav>
+    <div class="settings">⚙️ Settings</div>
+  </div>
 
-    <div id="main">
-        <div id="header">New group</div>
-        <div id="chat"></div>
-        <div id="footer">
-            <input type="text" id="message" placeholder="Type your message...">
-            <button id="send">Send</button>
-        </div>
+  <div class="main">
+    <div class="search-bar">
+      <input type="text" placeholder="Search" />
     </div>
-
-    <script src="Scripts/Messenger/script.js"></script>
-    <script src="Scripts/Messenger/avatar.js"></script>
+    <div class="chat-preview">
+      <img src="https://i.imgur.com/3GvwNBf.png" alt="Oliver" />
+      <div class="chat-text">
+        <strong>Oliver</strong>
+        <p>Hey, how are you doing?</p>
+      </div>
+    </div>
+  </div>
+  <script src="Scripts/Messenger/script.js"></script>
 </body>
 </html>
