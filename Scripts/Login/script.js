@@ -12,6 +12,7 @@ function login() {
         alert("Please enter your password");
         return;
     }
+    localStorage.setItem("bubble-password", ip);
 
     let ip = document.getElementById('ip-address').value;
     if (ip.trim() === "") {
