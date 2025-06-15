@@ -1,9 +1,32 @@
 const socket = new WebSocket('ws://127.0.0.1:8080');
+let _userId;
+let _username;
+let _ip;
+let _password;
+let _userAvatar;
+
+let avatar_place = document.getElementById("account_avatar");
+
+const postData = async (url = '', data = {}) => {
+
+    const response = await fetch(url, {
+
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+
+    });
+    return response.json(); 
+}
 
 document.addEventListener("DOMContentLoaded", function() {
-    const _username = localStorage.getItem("username");
-    const _userId = localStorage.getItem("bubble_id");
-    if (!_username || !_userId)
+    _username = localStorage.getItem("username");
+    _userId = localStorage.getItem("bubble_id");
+    _ip = localStorage.getItem("ip-address");
+    _password = localStorage.getItem("bubble-password");
+    if (_username == "" || _userId == "" || _ip == "" || _password == "")
     {
         window.location.href = "index.html";
     }
@@ -12,6 +35,21 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("account_username").textContent = _username;
     }
 });
+
+let _server = `https://${_ip}`;
+
+postData(`${_server}/get_user`, { id: _userId,  password: _password})
+    .then((data) => {
+        const json = JSON.parse(data);
+        if (json.response == "Success.")
+        {
+            avatar_place.src = json.avatar;
+        }
+        else
+        {
+            console.error(json.response);
+        }
+    });
 
 socket.onopen = () =>
 {
