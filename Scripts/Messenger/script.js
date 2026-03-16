@@ -7,6 +7,21 @@ let _userAvatar;
 
 let avatar_place = document.getElementById("account_avatar");
 
+function add_user(username, avatar)
+{
+    let chatlist = document.getElementById("chatlist");
+
+    let new_chat = `<div class="chat-preview">
+                      <img src="${avatar}"/>
+                      <div class="chat-text">
+                        <strong>${username}</strong>
+                        <p>No messages</p>
+                      </div>
+                    </div>`
+
+    chatlist.insertAdjacentHTML('beforeend', new_chat);
+}
+
 //  Шаблон отправки данных на сервер
 
 const postData = async (url = '', data = {}) => {
@@ -83,6 +98,8 @@ socket.onmessage = (event) =>
 
         if (data.type == "create_user")
         {
+            add_user(data.name, data.avatar);
+
             console.log("New user registered!");
         }
     } 
