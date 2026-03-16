@@ -7,6 +7,8 @@ let _userAvatar;
 
 let avatar_place = document.getElementById("account_avatar");
 
+//  Шаблон отправки данных на сервер
+
 const postData = async (url = '', data = {}) => {
 
     const response = await fetch(url, {
@@ -21,6 +23,8 @@ const postData = async (url = '', data = {}) => {
     return response.json(); 
 }
 
+//  Получаем сохранённые поля из localstorage клиента
+
 _username = localStorage.getItem("username");
 _userId = localStorage.getItem("bubble_id");
 _ip = localStorage.getItem("ip-address");
@@ -33,6 +37,8 @@ else
 {
     document.getElementById("account_username").textContent = _username;
 }
+
+//  Получаем id пользователя от сервера
 
 let _server = `https://${_ip}`;
 
@@ -47,7 +53,10 @@ postData(`${_server}/get_user`, { id: _userId,  password: _password})
         {
             console.error(json.response);
         }
-    });
+    }
+);
+
+//  Открытие сокета
 
 socket.onopen = () =>
 {
@@ -62,6 +71,8 @@ socket.onopen = () =>
     socket.send(JSON.stringify(message));
 };
 
+//  Получение сообщения через сокет
+
 socket.onmessage = (event) =>
 {
     try
@@ -69,6 +80,11 @@ socket.onmessage = (event) =>
         const data = JSON.parse(event.data);
     
         console.log(data);
+
+        if (data.type == "create_user")
+        {
+            console.log("New user registered!");
+        }
     } 
     catch (error)
     {
@@ -76,11 +92,15 @@ socket.onmessage = (event) =>
     }
 };
 
+//  Закрытие сокета
+
 socket.onclose = () =>
 {
     alert("Lost connection to server.");
     window.location.href = 'index.html';
 };
+
+//  Если пользователь закрыл вкладку, отправляем инфо на сервер
 
 window.addEventListener("unload", function() {
     const message =
@@ -91,6 +111,8 @@ window.addEventListener("unload", function() {
 
     socket.send(JSON.stringify(message));
 });
+
+//  Обработка ошибок сокета
 
 socket.onerror = (error) =>
 {
