@@ -21,20 +21,18 @@ const postData = async (url = '', data = {}) => {
     return response.json(); 
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    _username = localStorage.getItem("username");
-    _userId = localStorage.getItem("bubble_id");
-    _ip = localStorage.getItem("ip-address");
-    _password = localStorage.getItem("bubble-password");
-    if (_username == "" || _userId == "" || _ip == "" || _password == "")
-    {
-        window.location.href = "index.html";
-    }
-    else
-    {
-        document.getElementById("account_username").textContent = _username;
-    }
-});
+_username = localStorage.getItem("username");
+_userId = localStorage.getItem("bubble_id");
+_ip = localStorage.getItem("ip-address");
+_password = localStorage.getItem("bubble-password");
+if (_username == "" || _userId == "" || _ip == "" || _password == "")
+{
+    window.location.href = "index.html";
+}
+else
+{
+    document.getElementById("account_username").textContent = _username;
+}
 
 let _server = `https://${_ip}`;
 
