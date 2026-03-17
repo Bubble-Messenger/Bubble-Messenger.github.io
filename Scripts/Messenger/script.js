@@ -71,6 +71,18 @@ postData(`${_server}/get_user`, { id: _userId,  password: _password})
     }
 );
 
+//  Отображаем текущие чаты
+
+postData(`${_server}/get_users`, { id: _userId})
+    .then((data) => {
+        const json = JSON.parse(data);
+        
+        (json.users).forEach(user => {
+            add_user(user[0], user[2]);
+        });
+    }
+);
+
 //  Открытие сокета
 
 socket.onopen = () =>
@@ -95,13 +107,6 @@ socket.onmessage = (event) =>
         const data = JSON.parse(event.data);
     
         console.log(data);
-
-        if (data.type == "create_user")
-        {
-            add_user(data.name, data.avatar);
-
-            console.log("New user registered!");
-        }
     } 
     catch (error)
     {
