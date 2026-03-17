@@ -78,7 +78,7 @@ postData(`${_server}/get_users`, { id: _userId})
         const json = JSON.parse(data);
         
         (json.users).forEach(user => {
-            add_user(user[0], user[2]);
+            add_user(user.username, user.avatar);
         });
     }
 );
